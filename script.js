@@ -70,7 +70,18 @@ function addItem(evt) {
 
 
   function filterItems(evt) {
-    const text = itemList.querySelectorAll('li');
+    const items = itemList.querySelectorAll('li');
+    const text = evt.target.value.toLowerCase();
+
+    items.forEach(item => {
+      const itemName = item.firstChild.textContent.toLowerCase();
+
+      if(itemName.indexOf(text) != -1) {
+        item.style.display = 'flex';
+      }else {
+        item.style.display = 'none';
+      }
+    });
   }
 
   function checkUI() {
