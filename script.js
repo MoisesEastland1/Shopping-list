@@ -8,6 +8,10 @@ const itemFilter = document.getElementById('filter');
 
 const clearBtn = document.getElementById('clear');
 
+const formBtn = itemForm.querySelector('button');
+
+let isEditMode = false;
+
 function displayItems() {
   const itemsFromStorage = getItemsFromStorage();
 
@@ -104,7 +108,20 @@ function addItemToDOM(item) {
   function onClickItem(evt) {
   if(evt.target.parentNode.classList.contains('remove-item')) {
     removeItem(evt.target.parentNode.parentNode)
+    }else {
+    setItemToEdit(evt.target);
+    }
   }
+
+  function setItemToEdit(item) {
+    isEditMode = true;
+
+    itemList.querySelectorAll('li').forEach((i) => i.classList.remove('edit-mode'));
+
+    item.classList.add('edit-mode');
+    formBtn.innerHTML = '<li class="fa-solid fa-pen"></li> Update Item';
+    formBtn.style.backgroundColor = 'blue';
+    itemInput.value = item.textContent;
   }
 
 
@@ -143,7 +160,7 @@ function addItemToDOM(item) {
     //Clear from loaclstorege
     localStorage.removeItem('items');
 
-    
+
     checkUI();
   }
 
